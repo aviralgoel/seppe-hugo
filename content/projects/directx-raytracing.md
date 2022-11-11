@@ -31,14 +31,13 @@ This is why we calculate the variance before each time we trace more rays. If th
 
 The variance is calculated using the formula below:
 
+{{< rawhtml >}}
 <div style="text-align: center; width: 100%">
     <a href="/img/proj_DirectXRaytracing/adaptive-sampling-variance.png">
         <img src="/img/proj_DirectXRaytracing/adaptive-sampling-variance.png" alt="variance formula" width="280px">
     </a>
 </div>
-
-<br />
-<br />
+{{< /rawhtml >}}
 
 To save time setting up a DirectX 12 application, I started from the [MiniEngine](https://github.com/microsoft/DirectX-Graphics-Samples/tree/master/MiniEngine) framework. It allowed me to quickly set up an application with DirectX 12 so that I could simply hook in the raytracing part.
 
@@ -55,8 +54,6 @@ Next up, we pick out all the noisy pixels. To do this, we calculate how much a p
 This result is then passed to a "blurring" stage, so we know the general area where noise is. Using this "noise map", we can discard large parts of the image, because we know that there is no further noise to clean up in those areas.
 
 [![Blurred noise areas](/img/proj_DirectXRaytracing/noise_map_blurred.png)](/img/proj_DirectXRaytracing/noise_map_blurred.png)
-
-<br />
 
 With the noise map that acts as a mask, we can now trace additional rays. We can control the number of extra rays we trace thanks to the useful engine variables in the MiniEngine.
 
@@ -86,16 +83,9 @@ if (g_Dynamic.frameCount != 0 && g_Dynamic.currentPassIdx > g_Dynamic.minimumPas
         return;
 }
 ```
-
-<br />
-<br />
-
 And at last, the final result gets combined with the texture colors from the scene, and we end up with an image that looks something like this:
 
 [![Final combine](/img/proj_DirectXRaytracing/final_combine.png)](/img/proj_DirectXRaytracing/final_combine.png)
-
-<br />
-<br />
 
 # Assessing Image Quality
 
@@ -105,8 +95,6 @@ I accumulated rays over a total of 1000 frames. The left half of the zoom-in fra
 
 [![Bistro big](/img/proj_DirectXRaytracing/bistro-1-comparison-big.png)](/img/proj_DirectXRaytracing/bistro-1-comparison-big.png)
 
-<br />
-
 [![sponza](/img/proj_DirectXRaytracing/sponza-2-comparison.png)](/img/proj_DirectXRaytracing/sponza-2-comparison.png)
 
 [![sponza big](/img/proj_DirectXRaytracing/sponza-2-comparison-big.png)](/img/proj_DirectXRaytracing/sponza-2-comparison-big.png)
@@ -114,9 +102,6 @@ I accumulated rays over a total of 1000 frames. The left half of the zoom-in fra
 (click to view the full image)
 
 The right half of the image always results in a much cleaner render with a lot less noise, because more rays have been gathered in the right zoom-in.
-
-<br />
-<br />
 
 # Performance
 
@@ -137,10 +122,6 @@ The right half of the image always results in a much cleaner render with a lot l
 [![Bistro Exterior Performance](/img/proj_DirectXRaytracing/bistro-ext-performance.png)](/img/proj_DirectXRaytracing/bistro-ext-performance.png)
 
 Over time as more rays are traced for each pixel, and thus the amount of noise gets reduced, there are fewer noisy pixels that need additional rays to be traced. As you can see, this leads to increased performance.
-
-<br />
-<br />
-<br />
 
 # Media
 

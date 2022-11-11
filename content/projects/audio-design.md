@@ -14,8 +14,7 @@ Designing and implementing all sounds in a level in Unreal Engine
 This was my exam project for the extra Audio Design course that I took. I am quite proud of what I've managed to produce here, as I put quite a few hours into the entire project.
 
 
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0pPvgizTlEM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{< youtube 0pPvgizTlEM >}}
 
 
 ## Ambient sounds

@@ -29,8 +29,6 @@ Features include:
 Currently in-progress:
 - PBR renderer
 
-<br>
-
 # Implementation
 
 Of course the project itself is too big to talk about everything in here, so I selected some of the most interesting bits.
@@ -57,8 +55,6 @@ void Scene::Draw()
     VkDebugMarker::EndRegion(cmd);
 }
 ```
-
-<br>
 
 This is an example of how the PipelineBuilder can be used to easily create multiple pipelines:
 
@@ -99,36 +95,29 @@ void VulkanRenderer::CreateGraphicsPipeline()
 }
 ```
 
-<br>
-
 Of course there is so much more going on in this project, please visit the [GitHub repository](https://github.com/SeppahBaws/PelicanEngine) to get the full picture.
-
-<br>
-<br>
 
 # Media
 Here you can see the shader hot-reloading system in action:
 
+{{< rawhtml >}}
 <video width="100%" controls muted src="/img/proj_VulkanRenderer/vid/Pelican_ShaderReload.mp4">
-
-<br>
-<br>
+</video>
+{{< /rawhtml >}}
 
 Here is the Dear ImGui debug UI doing its job:
 
+{{< rawhtml >}}
 <video width="100%" controls muted src="/img/proj_VulkanRenderer/vid/Pelican_ImGui.mp4">
 </video>
-
-<br>
-<br>
+{{< /rawhtml >}}
 
 And finally, a sneak preview of the PBR renderer (currently, only simple lighting is implemented)
 
+{{< rawhtml >}}
 <video width="100%" controls muted src="/img/proj_VulkanRenderer/vid/Pelican_PBR.mp4">
 </video>
-
-<br>
-<br>
+{{< /rawhtml >}}
 
 used libraries:
 - [glfw](https://github.com/glfw/glfw) (windowing)
