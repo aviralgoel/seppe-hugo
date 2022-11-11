@@ -22,7 +22,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist-without-markdown
+          name: dist
           path: public
       # - if: ${{ github.event_name == 'push' }}
       #   name: Deploy via FTP
