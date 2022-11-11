@@ -1,0 +1,21 @@
+<nav id="nav">
+    <div class="nav-content">
+        <div class="nav-item">
+            <p class="nav-title">
+                {{ .Site.Title }}
+            </p>
+        </div>
+
+        {{ range .Site.Menus.main }}
+            <div class="nav-item">
+                <a
+                    href="{{ .URL }}"
+                    class="nav-link active"
+                    {{ if or (strings.HasPrefix .URL "http") (strings.HasPrefix .URL "https")}} rel="noreferrer" target="_blank" {{ end }}
+                >
+                    {{ .Name }}
+                </a>
+            </div>
+        {{ end }}
+    </div>
+</nav>

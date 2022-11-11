@@ -1,0 +1,26 @@
+baseURL = "https://seppedekeyser.be"
+languageCode = "en-us"
+title = "Seppe Dekeyser"
+copyright = "©️ 2022 - Seppe Dekeyser"
+
+[params.Twitter]
+  creator = "SeppahBaws"
+  site = "SeppahBaws"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "About Me"
+    url = "/about-me"
+    weight = 2
+  [[menu.main]]
+    name = "Blog"
+    url = "https://renderingpixels.com"
+    weight = 3
+  [[menu.main]]
+    name = "Resume"
+    url = "https://cdn.seppedekeyser.be/SeppeDekeyserResume.pdf"
+    weight = 4
