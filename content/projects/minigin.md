@@ -5,7 +5,7 @@ draft: false
 featured: false
 tags: ["C++", "SDL 2.0"]
 description: "A simple 2d game engine, written from scratch in C++ using SDL."
-cover: "/img/proj_Minigin/BubbleBobble_game.png"
+cover: "https://cdn.seppedekeyser.be/img/proj_Minigin/BubbleBobble_game.png"
 weight: 5
 ---
 
@@ -25,7 +25,7 @@ A simple 2d game engine, written from scratch in C++ using SDL. (GitHub project 
 
 
 
-![Spawning a simple bubble while the enemy is going through its AI loop](/img/proj_Minigin/BubbleBobble_bubble.gif)
+![Spawning a simple bubble while the enemy is going through its AI loop](https://cdn.seppedekeyser.be/img/proj_Minigin/BubbleBobble_bubble.gif)
 
 
 

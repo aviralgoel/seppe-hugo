@@ -5,7 +5,7 @@ draft: false
 featured: false
 tags: ["Audio", "UE4"]
 description: "Designing and implementing all sounds in a level using Unreal Engine."
-cover: "/img/proj_AudioDesign/AudioDesign_Thumbnail.jpg"
+cover: "https://cdn.seppedekeyser.be/img/proj_AudioDesign/AudioDesign_Thumbnail.jpg"
 weight: 6
 ---
 

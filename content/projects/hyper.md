@@ -3,7 +3,7 @@ title: "Hybrid Ray Tracer"
 date: 2022-11-04T18:15:02+01:00
 draft: true
 description: "A hybrid ray tracer in Vulkan to check out ray tracing in Vulkan"
-cover: "/img/proj_Hyper/BistroExterior_01.png"
+cover: "https://cdn.seppedekeyser.be/img/proj_Hyper/BistroExterior_01.png"
 featured: true
 tags: ["C++", "Vulkan", "Ray Tracing"]
 weight: 1
@@ -17,11 +17,11 @@ Starting the project from scratch also gave me the opportunity to check out the 
 
 # About the renderer
 The renderer is a hybrid ray tracer: it first renders the base geometry in a rasterized pass first, then ray traces the scene for shadows, and finally combines the two outputs together in a combine pass.
-[![NsightFrameStructure.png](/img/proj_Hyper/FrameStructure/NsightFrameStructure.png)](/img/proj_Hyper/FrameStructure/NsightFrameStructure.png)
+[![NsightFrameStructure.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/NsightFrameStructure.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/NsightFrameStructure.png)
 
 ## Geometry pass
 All the geometry pass does is render the scene albedo color to a `R8G8B8A8_UNORM` render target:
-[![Geometry_output_color.png](/img/proj_Hyper/FrameStructure/Geometry_output_color.png)](/img/proj_Hyper/FrameStructure/Geometry_output_color.png)
+[![Geometry_output_color.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Geometry_output_color.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Geometry_output_color.png)
 
 ## Ray tracing pass
 The ray tracing pass traces two rays:
@@ -34,7 +34,7 @@ The ray tracing pass traces two rays:
 Currently this is simply done at 1 ray per pixel, without any denoising. I have been looking into some denoising techniques, but haven't gotten around to implementing one yet.
 
 The result is written to a `R8_UNORM` render target:
-[![Raytracing_output_color.png](/img/proj_Hyper/FrameStructure/Raytracing_output_color.png)](/img/proj_Hyper/FrameStructure/Raytracing_output_color.png)
+[![Raytracing_output_color.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Raytracing_output_color.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Raytracing_output_color.png)
 
 
 Payload passed with the ray:
@@ -132,7 +132,7 @@ The combine pass takes the output of the two previous passes and combines them i
 - applies gamma correction
 
 The result of the combine pass looks like this:
-[![Combine_output_color.png](/img/proj_Hyper/FrameStructure/Combine_output_color.png)](/img/proj_Hyper/FrameStructure/Combine_output_color.png)
+[![Combine_output_color.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Combine_output_color.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Combine_output_color.png)
 
 
 # Shaders
@@ -205,10 +205,10 @@ Enjoy some screenshots from the renderer, in a variety of different scenes:
 
 | | |
 |--|--|
-| [![BistroExterior_01.png](/img/proj_Hyper/BistroExterior_01.png)](/img/proj_Hyper/BistroExterior_01.png) | [![BistroExterior_02.png](/img/proj_Hyper/BistroExterior_02.png)](/img/proj_Hyper/BistroExterior_02.png) |
-| [![BistroInterior_01.png](/img/proj_Hyper/BistroInterior_01.png)](/img/proj_Hyper/BistroInterior_01.png) | [![NewSponza_01.png](/img/proj_Hyper/NewSponza_01.png)](/img/proj_Hyper/NewSponza_01.png) |
-| [![SanMiguel_01.png](/img/proj_Hyper/SanMiguel_01.png)](/img/proj_Hyper/SanMiguel_01.png) | [![SanMiguel_02.png](/img/proj_Hyper/SanMiguel_02.png)](/img/proj_Hyper/SanMiguel_02.png) |
-| [![TrainStation_01.png](/img/proj_Hyper/TrainStation_01.png)](/img/proj_Hyper/TrainStation_01.png) | [![TrainStation_02.png](/img/proj_Hyper/TrainStation_02.png)](/img/proj_Hyper/TrainStation_02.png) |
+| [![BistroExterior_01.png](https://cdn.seppedekeyser.be/img/proj_Hyper/BistroExterior_01.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/BistroExterior_01.png) | [![BistroExterior_02.png](https://cdn.seppedekeyser.be/img/proj_Hyper/BistroExterior_02.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/BistroExterior_02.png) |
+| [![BistroInterior_01.png](https://cdn.seppedekeyser.be/img/proj_Hyper/BistroInterior_01.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/BistroInterior_01.png) | [![NewSponza_01.png](https://cdn.seppedekeyser.be/img/proj_Hyper/NewSponza_01.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/NewSponza_01.png) |
+| [![SanMiguel_01.png](https://cdn.seppedekeyser.be/img/proj_Hyper/SanMiguel_01.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/SanMiguel_01.png) | [![SanMiguel_02.png](https://cdn.seppedekeyser.be/img/proj_Hyper/SanMiguel_02.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/SanMiguel_02.png) |
+| [![TrainStation_01.png](https://cdn.seppedekeyser.be/img/proj_Hyper/TrainStation_01.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/TrainStation_01.png) | [![TrainStation_02.png](https://cdn.seppedekeyser.be/img/proj_Hyper/TrainStation_02.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/TrainStation_02.png) |
 
 ---
 Project repository: https://github.com/SeppahBaws/Hyper

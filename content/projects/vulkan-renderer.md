@@ -3,7 +3,7 @@ title: "Vulkan Renderer"
 date: 2022-04-30T21:42:46+02:00
 draft: false
 description: "A Vulkan renderer I worked on to improve my knowledge of the Vulkan API."
-cover: "/img/proj_VulkanRenderer/Pelican_Banner.png"
+cover: "https://cdn.seppedekeyser.be/img/proj_VulkanRenderer/Pelican_Banner.png"
 featured: true
 tags: ["C++", "Vulkan"]
 weight: 3
@@ -101,21 +101,21 @@ Of course there is so much more going on in this project, please visit the [GitH
 Here you can see the shader hot-reloading system in action:
 
 {{< rawhtml >}}
-<video width="100%" controls muted src="/img/proj_VulkanRenderer/vid/Pelican_ShaderReload.mp4">
+<video width="100%" controls muted src="https://cdn.seppedekeyser.be/img/proj_VulkanRenderer/vid/Pelican_ShaderReload.mp4">
 </video>
 {{< /rawhtml >}}
 
 Here is the Dear ImGui debug UI doing its job:
 
 {{< rawhtml >}}
-<video width="100%" controls muted src="/img/proj_VulkanRenderer/vid/Pelican_ImGui.mp4">
+<video width="100%" controls muted src="https://cdn.seppedekeyser.be/img/proj_VulkanRenderer/vid/Pelican_ImGui.mp4">
 </video>
 {{< /rawhtml >}}
 
 And finally, a sneak preview of the PBR renderer (currently, only simple lighting is implemented)
 
 {{< rawhtml >}}
-<video width="100%" controls muted src="/img/proj_VulkanRenderer/vid/Pelican_PBR.mp4">
+<video width="100%" controls muted src="https://cdn.seppedekeyser.be/img/proj_VulkanRenderer/vid/Pelican_PBR.mp4">
 </video>
 {{< /rawhtml >}}
 

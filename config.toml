@@ -3,6 +3,9 @@ languageCode = "en-us"
 title = "Seppe Dekeyser"
 copyright = "©️ 2022 - Seppe Dekeyser"
 
+[params]
+  description = "Aspiring rendering engineer"
+
 [params.Twitter]
   creator = "SeppahBaws"
   site = "SeppahBaws"

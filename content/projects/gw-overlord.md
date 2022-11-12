@@ -5,7 +5,7 @@ draft: false
 featured: false
 tags: ["C++", "DirectX 11"]
 description: "A small replica of Geometry Wars 3 in the Overlord game engine."
-cover: "/img/proj_GW-Overlord/Screenshot_3.png"
+cover: "https://cdn.seppedekeyser.be/img/proj_GW-Overlord/Screenshot_3.png"
 weight: 4
 ---
 

@@ -24,12 +24,12 @@ jobs:
         with:
           name: dist
           path: public
-      # - if: ${{ github.event_name == 'push' }}
-      #   name: Deploy via FTP
-      #   uses: airvzxf/ftp-deployment-action@latest
-      #   with:
-      #     server: ${{ secrets.FTP_URL }}
-      #     user: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     local_dir: "./public"
-      #     delete: false
+      - if: ${{ github.event_name == 'push' }}
+        name: Deploy via FTP
+        uses: airvzxf/ftp-deployment-action@latest
+        with:
+          server: ${{ secrets.FTP_URL }}
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_dir: "./public"
+          delete: false
