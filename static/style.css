@@ -3,7 +3,6 @@
     --background: #222527;
     --background-lighter: #2d3133;
     --background-light: #383d3f;
-    --selection: #4ab3e8;
     --accent: #ef626c;
     --accent-dark: #bb3039;
     --text: #f9f9f1;
@@ -33,7 +32,7 @@ body {
 }
 
 *::selection {
-    background-color: var(--selection);
+    background-color: var(--accent);
     color: var(--text);
 }
 
@@ -211,6 +210,8 @@ a:active {
 }
 .container img {
     max-width: 100%;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .container h1 {
@@ -224,9 +225,6 @@ a:active {
 .container h3 {
     margin-top: 2rem;
     margin-bottom: 1rem;
-}
-.container img {
-    margin-top: 0.5rem;
 }
 .container li {
     margin-top: 0.25rem;
