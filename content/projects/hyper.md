@@ -1,14 +1,34 @@
 ---
 title: "Hybrid Ray Tracer"
 date: 2022-11-04T18:15:02+01:00
-draft: true
-description: "A hybrid ray tracer in Vulkan to check out ray tracing in Vulkan"
+draft: false
+description: "A hybrid ray tracer written from scratch to check out ray tracing in Vulkan."
 cover: "https://cdn.seppedekeyser.be/img/proj_Hyper/BistroExterior_01.png"
 featured: true
 tags: ["C++", "Vulkan", "Ray Tracing"]
 weight: 1
 ---
 
+{{< rawhtml >}}
+<details>
+<summary>Table of Contents</summary>
+{{</ rawhtml >}}
+
+- [About the renderer](#about-the-renderer)
+  - [Geometry pass](#geometry-pass)
+  - [Ray tracing pass](#ray-tracing-pass)
+    - [About the ray tracing shaders](#about-the-ray-tracing-shaders)
+  - [Composite pass](#composite-pass)
+- [Shader system](#shader-system)
+  - [Shader compilation and reflection](#shader-compilation-and-reflection)
+  - [Shader hot-reloading](#shader-hot-reloading)
+  - [Shader cache](#shader-cache)
+- [Improvements for the future](#improvements-for-the-future)
+- [Media](#media)
+
+{{< rawhtml >}}
+</details>
+{{</ rawhtml >}}
 
 
 I initially started this project as a spiritual successor to my [Vulkan renderer](/projects/vulkan-renderer), but eventually decided to keep the scope limited so that I could check out how ray tracing in Vulkan works.
@@ -17,10 +37,12 @@ Starting the project from scratch also gave me the opportunity to check out the 
 
 # About the renderer
 The renderer is a hybrid ray tracer: it first renders the base geometry in a rasterized pass first, then ray traces the scene for shadows, and finally combines the two outputs together in a combine pass.
+
 [![NsightFrameStructure.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/NsightFrameStructure.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/NsightFrameStructure.png)
 
 ## Geometry pass
 All the geometry pass does is render the scene albedo color to a `R8G8B8A8_UNORM` render target:
+
 [![Geometry_output_color.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Geometry_output_color.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Geometry_output_color.png)
 
 ## Ray tracing pass
@@ -34,14 +56,17 @@ The ray tracing pass traces two rays:
 Currently this is simply done at 1 ray per pixel, without any denoising. I have been looking into some denoising techniques, but haven't gotten around to implementing one yet.
 
 The result is written to a `R8_UNORM` render target:
+
 [![Raytracing_output_color.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Raytracing_output_color.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Raytracing_output_color.png)
 
+### About the ray tracing shaders
 
-Payload passed with the ray:
+This is the payload passed along with the ray.
+It stores whether the ray is a secondary ray or not, and if it intersected with any geometry.
 ```c
 struct HitInfo
 {
-    float rayT;
+    bool hitAnything;
     bool isSecondaryRay;
 };
 
@@ -51,69 +76,64 @@ struct Payload
 };
 ```
 
-
-Ray generation shader:
+The ray generation shader spawns rays from the camera into the scene.
+After the rays went through the hit or miss shader, the shadow mask for this pixel gets created with the payload of the ray, and stored into the `outputImage`.
 ```c
 [shader("raygeneration")]
 void main()
 {
-    const float FLT_MAX = float(0x7F7FFFFF);
-    
-    uint3 launchId = DispatchRaysIndex();
-    uint3 launchSize = DispatchRaysDimensions();
-    
-    const float2 pixelCenter = DispatchRaysIndex().xy + float2(0.5, 0.5);
-    const float2 inUV = pixelCenter / DispatchRaysDimensions().xy;
+    const uint3 launchId = DispatchRaysIndex();
+    const uint3 launchSize = DispatchRaysDimensions();
+
+    // Calculate the world position from the current screen coordinates
+    const float2 pixelCenter = launchId.xy + float2(0.5, 0.5);
+    const float2 inUV = pixelCenter / launchSize.xy;
     const float2 d = inUV * 2.0 - 1.0;
-    
-    float4 origin = mul(camera.viewInverse, float4(0, 0, 0, 1));
-    float4 target = mul(camera.projInverse, float4(d.x, d.y, 1, 1));
-    float4 direction = mul(camera.viewInverse, float4(normalize(target.xyz), 0));
-    
+
+    const float4 origin = mul(camera.viewInverse, float4(0, 0, 0, 1));
+    const float4 target = mul(camera.projInverse, float4(d.x, d.y, 1, 1));
+    const float4 direction = mul(camera.viewInverse, float4(normalize(target.xyz), 0));
+
     Payload payload = (Payload)0;
+    payload.hitInfo.hitAnything = false;
     payload.hitInfo.isSecondaryRay = false;
-    
+
     RayDesc rayDesc;
     rayDesc.Origin = origin.xyz;
     rayDesc.Direction = direction.xyz;
     rayDesc.TMin = 0.001;
     rayDesc.TMax = 10000.0;
     TraceRay(accel, RAY_FLAG_FORCE_OPAQUE, 0xFF, 0, 0, 0, rayDesc, payload);
-    
-    image[int2(launchId.xy)] = float(payload.hitInfo.rayT == FLT_MAX) * 1.0;
+
+    outputImage[int2(launchId.xy)] = float(!payload.hitInfo.hitAnything) * 1.0;
 }
 ```
 
-
-Miss shader:
-```c
-[shader("miss")]
-void main(inout Payload payload)
-{
-    const float FLT_MAX = float(0x7F7FFFFF);
-    
-    payload.hitInfo.rayT = FLT_MAX;
-}
-```
-
-
-Closest Hit shader:
+The closest hit shader has two functions:
+- Spawn a secondary ray from the hit position in the worl, towards the direction of the sun.
+- If the ray is a secondary ray, flag it as having hit geometry instead.
 ```c
 [shader("closesthit")]
 void main(inout Payload payload)
 {
+    // If this ray is a secondary ray, flag it as having hit geometry and return from the shader.
     if (payload.hitInfo.isSecondaryRay)
     {
-        payload.hitInfo.rayT = RayTCurrent();
+        payload.hitInfo.hitAnything = true;
         return;
     }
-    
+
+    // Calculate the origin and direction of the secondary ray that will test for shadows.
+    // This ray will have a random offset in direction, to simulate soft shadows.
+
+    // InitRand credit: Chris Wyman: http://cwyman.org/code/dxrTutors/tutors/Tutor5/tutorial05.md.html
     uint randSeed = InitRand(DispatchRaysIndex().x + DispatchRaysIndex().y * DispatchRaysDimensions().x, pushConstants.frameNr);
-    
-    float3 origin = WorldRayOrigin() + WorldRayDirection() * RayTCurrent();
-    float3 randomOffset = GetRandomOnUnitSphere(randSeed);
-    float3 direction = normalize(normalize(pushConstants.sunDir) * 10.0 + randomOffset * 0.1);
-    
+
+    // GetRandomOnUnitSphere credit: Cory Simon: http://corysimon.github.io/articles/uniformdistn-on-sphere/
+    const float3 origin = WorldRayOrigin() + WorldRayDirection() * RayTCurrent();
+    const float3 randomOffset = GetRandomOnUnitSphere(randSeed);
+    const float3 direction = normalize(normalize(pushConstants.sunDir) * 10.0 + randomOffset * 0.1);
+
     RayDesc rayDesc;
     rayDesc.Origin = origin;
     rayDesc.Direction = direction;
@@ -124,29 +144,60 @@ void main(inout Payload payload)
 }
 ```
 
+The miss shader simply flags the ray as not having hit any geometry.
+```c
+[shader("miss")]
+void main(inout Payload payload)
+{
+    payload.hitInfo.hitAnything = false;
+}
+```
 
 
-## Combine pass
+## Composite pass
 The combine pass takes the output of the two previous passes and combines them into one output buffer. It's a very simple pass which:
 - darkens the areas which are in shadows
 - applies gamma correction
 
 The result of the combine pass looks like this:
+
 [![Combine_output_color.png](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Combine_output_color.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/FrameStructure/Combine_output_color.png)
 
 
-# Shaders
-The previous project already had a shader hot-reloading system in place, but it required you to compile the shaders before-hand, and then hot-reload the compiled shader binary code. I wanted to change this so that I could just press one button and have everything just work.
+# Shader system
+The previous project already had a shader hot-reloading system in place, but it required you to compile the shaders before-hand, and then hot-reload the compiled shader binary code.
+I wanted to change this so that I could just press one button and have everything compile and hot-reload.
 I also wanted to play around with shader reflection, to automatically generate descriptor sets.
 
-## Shader compilation
-I started with GLSL shaders which were compiled through [shaderc](https://github.com/google/shaderc), but eventually decided to switch over to HLSL shaders with the [DirectX Shader Compiler](https://github.com/microsoft/DirectXShaderCompiler), as I am going to need it in the future if I want to add some library which only comes in HLSL form.
-After shaders are compiled they get reflected with [spirv_cross](https://github.com/KhronosGroup/SPIRV-Cross). From this reflection data I generate descriptor sets automatically, because setting up descriptor sets automatically can become a lot of effort.
+## Shader compilation and reflection
+I started with GLSL shaders which were compiled through [shaderc](https://github.com/google/shaderc), but eventually decided to switch over to HLSL shaders with the [DirectX Shader Compiler](https://github.com/microsoft/DirectXShaderCompiler).
 
-Currently the reflection data isn't shared with all the parts of the renderer yet, as I have yet to figure out a clean way to do this. The Vulkan pipelines are created with manually defining the descriptor sets, but luckily the validation layers do warn you when these descriptor sets of the pipeline and shaders don't match up, so it's not too big of a problem right now.
+After shaders are compiled, they get reflected with [spirv_cross](https://github.com/KhronosGroup/SPIRV-Cross).
+A little bit of parsing later, this provides all sorts of useful information about a shader:
+
+[![ShaderReflectionOutput.png](https://cdn.seppedekeyser.be/img/proj_Hyper/ShaderReflectionOutput.png)](https://cdn.seppedekeyser.be/img/proj_Hyper/ShaderReflectionOutput.png)
+
+From this reflection data, descriptor set layouts are generated and push constant info structs are filled in.
+These are then used to create the descriptor sets and the graphics pipelines.
+
+Sadly, the ray tracing shaders are a bit special and don't work nicely with the reflection data, so I manually create the descrioptor sets for the ray tracing pipeline.
+Luckily my helper class makes this pretty painless:
+```cpp
+m_DescLayout = DescriptorSetLayoutBuilder(m_pRenderCtx->device)
+    .AddBinding(
+        vk::DescriptorType::eAccelerationStructureKHR, // Type of descriptor
+        0, // Descriptor binding
+        1, // Descriptor count
+        vk::ShaderStageFlagBits::eRaygenKHR | vk::ShaderStageFlagBits::eClosestHitKHR // Shader stage flags
+    )
+    .AddBinding(vk::DescriptorType::eStorageImage, 1, 1, vk::ShaderStageFlagBits::eRaygenKHR)
+    .AddBinding(vk::DescriptorType::eUniformBuffer, 2, 1, vk::ShaderStageFlagBits::eRaygenKHR)
+    .Build();
+```
 
 ## Shader hot-reloading
-If you want to reload a shader, you also have to re-create the pipeline it belongs to. To handle this, I created the `ShaderLibrary` class, which keeps track of all the shaders and their dependencies.
+If you want to reload a shader, you also have to re-create the pipeline it belongs to.
+To handle this, I created the `ShaderLibrary` class, which manages all the shaders, and keeps track of their dependencies.
 ```cpp
 struct ShaderDependencies
 {
@@ -157,8 +208,15 @@ struct ShaderDependencies
 class ShaderLibrary
 {
 public:
-    // Functions for registring shaders and their dependencies...
+    // Constructor loads all the shaders.
+    ShaderLibrary(RenderContext* pRenderCtx);
+    
+    // Pipelines register themselves as dependencies on the shaders that they use.
+    void RegisterShaderDependency(const UUID& shaderId, VulkanGraphicsPipeline* graphicsPipeline);
+    void RegisterShaderDependency(const UUID& shaderId, VulkanRayTracingPipeline* rtPipeline);
+
 private:
+    std::unordered_map<std::string, std::unique_ptr<VulkanShader>> m_LoadedShaders;
     std::unordered_map<UUID, ShaderDependencies> m_ShaderDependencies;
 };
 ```
@@ -190,16 +248,15 @@ Because recompiling all shaders on each startup was starting to take some time, 
 
 # Improvements for the future
 Of course nothing is ever finished, and I have a couple of things I want to improve on in the future:
-- Share the shader reflection data with all parts that might need it, to avoid having to set them up manually and making sure they match everywhere.
 - Implement PBR shading. For this I will likely have to move the ray tracing pass before the geometry pass so that I have the shadow information in time for the PBR shading. Alternatively I could work with a G-buffer that holds the albedo, normal and depth information, which I could then use to calculate the world-position in the ray tracing pass, to avoid tracing that first ray. However I will have to measure the performance and memory tradeoffs between the two ways to see which one is better.
 - Add a denoiser for the ray traced shadows. Currently I'm thinking of implementing the [FidelityFX Shadows Denoiser](https://gpuopen.com/fidelityfx-denoiser/#shadow), as it seems to be doing everything I need.
 - Implement more ray traced techniques, such as:
-	- Ambient Occlusion
-	- Reflections
-	- Global Illumination
+    - Ambient Occlusion
+    - Reflections
+    - Global Illumination
 
 # Media
-Enjoy some screenshots from the renderer, in a variety of different scenes:
+Here are some screenshots of the renderer in a variety of scenes:
 
 (click on an image to view it in full-size)
 
