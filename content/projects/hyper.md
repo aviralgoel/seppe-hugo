@@ -110,7 +110,7 @@ void main()
 ```
 
 The closest hit shader has two functions:
-- Spawn a secondary ray from the hit position in the worl, towards the direction of the sun.
+- Spawn a secondary ray from the hit position in the world, towards the direction of the sun.
 - If the ray is a secondary ray, flag it as having hit geometry instead.
 ```c
 [shader("closesthit")]
