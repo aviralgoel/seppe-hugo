@@ -257,6 +257,18 @@ a:active {
 .container blockquote p {
     margin: 0;
 }
+.container .column-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+}
+@media screen and (max-width: 991px) {
+    .container .column-layout {
+        flex-direction: column;
+        gap: 0.2em;
+    }
+}
 
 /* code blocks */
 pre {

@@ -105,23 +105,34 @@ The right half of the image always results in a much cleaner render with a lot l
 
 # Performance
 
-<div class="ui grid" style="display: flex;">
-    <div class="three column row">
-        <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-1.png" class="column" style="padding: 2px">
-            <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-1.png" alt="bistro exterior 1"/>
-        </a>
-        <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-2.png" class="column" style="padding: 2px">
-            <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-2.png" alt="bistro exterior 2"/>
-        </a>
-        <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-3.png" class="column" style="padding: 2px">
-            <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-3.png" alt="bistro exterior 3"/>
-        </a>
-    </div>
+{{< rawhtml >}}
+<div class="column-layout">
+    <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-1.png" target="_blank">
+        <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-1.png" alt="bistro exterior 1"/>
+        <p style="margin-top: 0">Bistro exterior, view 1</p>
+    </a>
+    <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-2.png" target="_blank">
+        <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-2.png" alt="bistro exterior 2"/>
+        <p style="margin-top: 0">Bistro exterior, view 2</p>
+    </a>
+    <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-3.png" target="_blank">
+        <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-3.png" alt="bistro exterior 3"/>
+        <p style="margin-top: 0">Bistro exterior, view 3</p>
+    </a>
 </div>
+{{</ rawhtml >}}
 
 [![Bistro Exterior Performance](https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/bistro-ext-performance.png)](https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/bistro-ext-performance.png)
 
-Over time as more rays are traced for each pixel, and thus the amount of noise gets reduced, there are fewer noisy pixels that need additional rays to be traced. As you can see, this leads to increased performance.
+The configuration used for this benchmark:
+- minimum RT passes per pixel: 4
+- maximum RT passes per pixel: 16
+- variance toleration: 0.001
+
+Performance was measured on a machine with an Intel i9-9900k, and a NVIDIA RTX 2080 GPU.
+Each frame I measured the total GPU time, measuring 1000 frames in total.
+
+Over time as more rays are traced for each pixel, and thus the amount of noise gets reduced, there are fewer noisy pixels that need additional rays to be traced. As you can see, this leads to lower GPU frame time as we render more and more frames.
 
 # Media
 
