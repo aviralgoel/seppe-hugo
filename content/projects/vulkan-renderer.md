@@ -9,54 +9,21 @@ tags: ["C++", "Vulkan"]
 weight: 3
 ---
 
-This is a 3D Vulkan renderer that I built, to improve my knowledge of the Vulkan API.
+After finishing the [Vulkan Tutorial](https://vulkan-tutorial.com), I understood how the main concepts of the API work, but couldn't quite wrap my head around how they would work together in a more complex project.
 
-The base organization was heavily inspired by [TheCherno's Hazel tutorial engine](https://github.com/TheCherno/Hazel), with some personal twists on top.
+In the end, I ended up going on a long and deep dive into more of the details of the Vulkan API and how to write a game engine of sorts.
+I absolutely loved working on this project, and loved learning a lot from all the little challenges that stood in my way.
 
-This project is available on GitHub: [https://github.com/SeppahBaws/PelicanEngine]().
+Below the overview video I go into more details on some of the technical aspects of the project.
 
+{{< youtube zj0sBo4uxG4 >}}
 
-Features include:
-- Dynamic fly camera
-- Simple shading using albedo and AO textures
-- ImGui debug UI
-- ECS system
-- Scene file serialization and deserialization
-- Shader hot-reloading
-- Asset manager which controls the lifetime of assets
-- Pipeline builder to aid in setting up different pipelines
+# Abstraction layer over Vulkan
 
-Currently in-progress:
-- PBR renderer
+Because Vulkan is a very verbose API, I knew that building an abstraction layer on top of Vulkan would be vital.
 
-# Implementation
-
-Of course the project itself is too big to talk about everything in here, so I selected some of the most interesting bits.
-
-Here you can see how the objects in the scene get rendered, utilizing entt's easy view iterator.
-I also insert a debug marker, so that I can easily spot this part in a graphics debugger.
-
-```cpp
-void Scene::Draw()
-{
-    // Retrieve the current command buffer
-    vk::CommandBuffer cmd = VulkanRenderer::GetCurrentBuffer();
-
-    // Insert a debug marker for graphics debuggers
-    VkDebugMarker::BeginRegion(cmd, "Scene Render");
-
-    // Record all objects draw calls to the command buffer
-    auto view = m_Registry.view<TransformComponent, ModelComponent>();
-    for (auto [entity, transformComp, modelComp] : view.each())
-    {
-        modelComp.pModel->Draw();
-    }
-
-    VkDebugMarker::EndRegion(cmd);
-}
-```
-
-This is an example of how the PipelineBuilder can be used to easily create multiple pipelines:
+The main pain point I identified was setting up the pipelines, as they require a lot of boilerplate structs to be filled out.
+With my PipelineBuilder abstraction, it was super easy to set up a new pipeline:
 
 ```cpp
 void VulkanRenderer::CreateGraphicsPipeline()
@@ -93,11 +60,97 @@ void VulkanRenderer::CreateGraphicsPipeline()
     delete pShader;
     pShader = nullptr;
 }
+
 ```
 
-Of course there is so much more going on in this project, please visit the [GitHub repository](https://github.com/SeppahBaws/PelicanEngine) to get the full picture.
+# Shader hot-reloading
+
+Implementing shader hot-reloading was a fun little side-quest to figure out, because going into this I had no clue where to start.
+In the end I realized that all I had to do was simply destroy the current render pass and graphics pipeline, reload the shader files and recreate the render pass and graphics pipeline.
+
+Because of my small abstraction layer, this was fairly easy to implement, and the end code resulted in something like this:
+
+```cpp
+void VulkanRenderer::ReloadShaders()
+{
+	m_pDevice->WaitIdle();
+
+	m_Pipeline.Cleanup(m_pDevice->GetDevice());
+	m_pDevice->GetDevice().destroyRenderPass(m_RenderPass);
+
+	CreateRenderPass();
+	CreateGraphicsPipeline();
+}
+```
+
+# ECS scene system
+
+After hearing a lot of positive voices around using an ECS system, I decided to check out [EnTT](https://github.com/skypjack/entt) and implement it in my project.
+
+Its implementation in the project ended up being very trivial, as it mostly just needs to call EnTT functions:
+
+```cpp
+class Entity
+{
+public:
+    Entity() = delete;
+
+    template<typename T, typename... Args>
+    T& AddComponent(Args&&... args)
+    {
+        ASSERT_MSG(!HasComponent<T>(), "Entity already has component!");
+        T& component = m_pScene->m_Registry.emplace<T>(m_Entity, std::forward<Args>(args)...);
+        return component;
+    }
+
+    template<typename T>
+    void RemoveComponent()
+    {
+        ASSERT_MSG(HasComponent<T>(), "Entity does not have component!");
+        m_pScene->m_Registry.remove<T>(m_Entity);
+    }
+
+    template<typename T>
+    bool HasComponent()
+    {
+        return m_pScene->m_Registry.all_of<T>(m_Entity);
+    }
+
+private:
+    // Scene holds the entt::registry, from which entities are created.
+    // Only the scene is allowed to create entities
+    friend class Scene;
+    Entity(entt::entity entity);
+
+    entt::entity m_Entity{ entt::null };
+    Scene* m_pScene;
+};
+```
+
+EnTT makes it really easy to query entities which have certain components attached to them:
+
+```cpp
+void Scene::Draw()
+{
+    // Insert a debug marker for graphics debuggers
+    vk::CommandBuffer cmd = VulkanRenderer::GetCurrentBuffer();
+    VkDebugMarker::BeginRegion(cmd, "Scene Render");
+
+    // Get all entities that have a transform and a model component,
+    // and record their draw calls.
+    auto view = m_Registry.view<TransformComponent, ModelComponent>();
+    for (auto [entity, transformComp, modelComp] : view.each())
+    {
+        modelComp.pModel->Draw();
+    }
+
+    VkDebugMarker::EndRegion(cmd);
+}
+```
+
 
 # Media
+
 Here you can see the shader hot-reloading system in action:
 
 {{< rawhtml >}}
@@ -120,13 +173,14 @@ And finally, a sneak preview of the PBR renderer (currently, only simple lightin
 {{< /rawhtml >}}
 
 used libraries:
-- [glfw](https://github.com/glfw/glfw) (windowing)
-- [glm](https://github.com/g-truc/glm) (maths library)
-- [Dear ImGui](https://github.com/ocornut/imgui) (debug immediate-mode UI)
-- [logtools](https://github.com/SeppahBaws/logtools) (small logging library)
-- [tinygltf](https://github.com/syoyo/tinygltf) (loading gltf model files)
-- [stb_image](https://github.com/nothings/stb) (reading/writing image files)
-- [json](https://github.com/nlohmann/json) (reading/writing json files)
-- [entt](https://github.com/skypjack/entt) (ECS system)
+
+-   [glfw](https://github.com/glfw/glfw) (windowing)
+-   [glm](https://github.com/g-truc/glm) (maths library)
+-   [Dear ImGui](https://github.com/ocornut/imgui) (debug immediate-mode UI)
+-   [logtools](https://github.com/SeppahBaws/logtools) (small logging library)
+-   [tinygltf](https://github.com/syoyo/tinygltf) (loading gltf model files)
+-   [stb_image](https://github.com/nothings/stb) (reading/writing image files)
+-   [json](https://github.com/nlohmann/json) (reading/writing json files)
+-   [EnTT](https://github.com/skypjack/entt) (ECS system)
 
 [Project Repository](https://github.com/SeppahBaws/PelicanEngine)
