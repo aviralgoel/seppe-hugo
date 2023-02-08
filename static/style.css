@@ -1,3 +1,11 @@
+/* 
+ * Breakpoints:
+ * max 480px: Phones
+ * max 768px: Tablets
+ * max 1024px: Small screen laptops
+ * 1024px and above: desktop computers
+ */
+
 :root {
     --background-dark: #181a1b;
     --background: #222527;
@@ -19,6 +27,13 @@ body {
     min-height: 100vh;
     color: var(--text);
     font-family: var(--font-normal);
+}
+
+p,
+span,
+ul li,
+ol li {
+    line-height: 1.4rem;
 }
 
 /* Make the content grow, so the footer gets squished to the bottom. */
@@ -81,7 +96,7 @@ a:active {
 }
 
 /* Hide site title in navbar on mobile */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     #nav .nav-title {
         display: none;
     }
@@ -181,7 +196,7 @@ a:active {
     text-align: center;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     #home-grid {
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
@@ -322,7 +337,7 @@ code:not(pre code) {
     gap: 0.25rem;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 480px) {
     .post-header {
         margin: 0.5rem;
         margin-bottom: 1.25rem;
@@ -341,6 +356,17 @@ code:not(pre code) {
 .about .intro img {
     border-radius: 99999px;
 }
+
+.about .skills-container {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    /* justify-content: space-between; */
+    /* flex-wrap: wrap; */
+}
+.about .skills-container ul {
+    padding-left: 1rem;
+}
+
 .about .education-item {
     display: flex;
     gap: 1rem;
@@ -352,6 +378,7 @@ code:not(pre code) {
     padding: 0;
 }
 
+/* Small screen laptops */
 @media screen and (max-width: 991px) {
     .content {
         max-width: none;
@@ -376,5 +403,19 @@ code:not(pre code) {
     .about .education-item {
         flex-direction: column;
         gap: 0.25rem;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+    .about .skills-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Mobile devices */
+@media screen and (max-width: 480px) {
+    .about .skills-container {
+        grid-template-columns: 1fr;
     }
 }

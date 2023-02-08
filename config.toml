@@ -1,10 +1,10 @@
 baseURL = "https://seppedekeyser.be"
 languageCode = "en-us"
 title = "Seppe Dekeyser"
-copyright = "©️ 2022 - Seppe Dekeyser"
+copyright = "©️ 2022 - 2023 | Seppe Dekeyser"
 
 [params]
-  description = "Aspiring rendering engineer"
+  description = "Aspiring engine and graphics programmer"
 
 [params.Twitter]
   creator = "SeppahBaws"

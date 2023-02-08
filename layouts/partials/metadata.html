@@ -1,27 +1,36 @@
 {{ $isArticle := and (.IsPage) (ne .Page.Type "about-me") }}
 
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
+{{ $ogType := "website" }}
+{{ $twitterType := "summary" }}
+{{ $img := "https://cdn.seppedekeyser.be/img/pic_face.jpg" }}
+{{ $description := .Site.Params.description }}
+
+{{ if $isArticle }}
+    {{ $ogType = "article" }}
+    {{ $twitterType = "summary_large_image" }}
+    {{ $img = .Params.Cover }}
+    
+    {{ with .Description }}
+        {{ $description = . }}
+    {{ else }}
+        {{ if .IsPage }}
+            {{ $description = .Summary }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+<meta name="description" content="{{ $description }}" />
 
 <!-- OpenGraph -->
 <meta property="og:title" content="{{ .Title }}" />
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
-<meta property="og:type" content="{{ if $isArticle }}article{{ else }}website{{ end }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta property="og:type" content="{{ $ogType }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
-
-{{ if $isArticle }}
-<meta property="og:image" content="{{ .Params.Cover }}" />
-{{ else }}
-<meta property="og:image" content="https://cdn.seppedekeyser.be/img/pic_face.jpg" />
-{{ end }}
+<meta property="og:image" content="{{ $img}}" />
 
 <!-- Twitter card -->
-{{ if $isArticle }}
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="{{ .Params.Cover }}" />
-{{ else }}
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://cdn.seppedekeyser.be/img/pic_face.jpg" />
-{{ end }}
 <meta name="twitter:title" content="{{ .Title }}" />
-<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end -}}"/>
+<meta name="twitter:description" content="{{ $description }}"/>
+<meta name="twitter:card" content="{{ $twitterType }}" />
+<meta name="twitter:image" content="{{ $img }}" />
 <meta name="twitter:site" content="@{{ .Site.Params.Twitter.Creator }}" />
