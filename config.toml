@@ -1,7 +1,7 @@
 baseURL = "https://seppedekeyser.be"
 languageCode = "en-us"
-title = "Aviral Goel"
-copyright = "©️ 2022 - 2023 | Aviral Goel"
+title = "Seppe Dekeyser"
+copyright = "©️ 2022 - 2023 | Seppe Dekeyser"
 
 [params]
   description = "Aspiring engine and graphics programmer"
