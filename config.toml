@@ -1,14 +1,14 @@
-baseURL = "https://seppedekeyser.be"
+baseURL = "https://aviralgoel.xyz"
 languageCode = "en-us"
-title = "Seppe Dekeyser"
-copyright = "©️ 2022 - 2023 | Seppe Dekeyser"
+title = "Aviral Goel"
+copyright = "©️ 2022 - 2023 | Aviral Goel"
 
 [params]
-  description = "Aspiring engine and graphics programmer"
+  description = "C++ | Graphics | Gameplay"
 
 [params.Twitter]
-  creator = "SeppahBaws"
-  site = "SeppahBaws"
+  creator = ""
+  site = ""
 
 [menu]
   [[menu.main]]
@@ -20,10 +20,14 @@ copyright = "©️ 2022 - 2023 | Seppe Dekeyser"
     url = "/about-me"
     weight = 2
   [[menu.main]]
-    name = "Blog"
-    url = "https://renderingpixels.com"
+    name = "GitHub"
+    url = "https://github.com/aviralgoel"
     weight = 3
   [[menu.main]]
-    name = "Resume"
-    url = "https://cdn.seppedekeyser.be/SeppeDekeyserResume.pdf"
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/goelaviral/"
     weight = 4
+  [[menu.main]]
+    name = "Resume"
+    url = "/resumes/resume.pdf"
+    weight = 5

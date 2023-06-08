@@ -1,17 +1,15 @@
 ---
-title: "Minigin Engine"
+title: "Aviral's Graphics Library"
 date: 2022-11-11T18:06:18+01:00
 draft: false
-featured: false
-tags: ["C++", "SDL 2.0"]
-description: "A simple 2d game engine, written from scratch in C++ using SDL."
-cover: "https://cdn.seppedekeyser.be/img/proj_Minigin/BubbleBobble_game.png"
+featured: true
+tags: ["C", "SDL 2.0"]
+description: "A simple graphics library capable of performing 3d rasterization and shading.."
+cover: "/pictures/headshot.jpeg"
 weight: 5
 ---
 
 A simple 2d game engine, written from scratch in C++ using SDL. (GitHub project link: https://github.com/SeppahBaws/Minigin)
-
-
 
 ### Features set
 
@@ -23,11 +21,7 @@ A simple 2d game engine, written from scratch in C++ using SDL. (GitHub project 
 - Debug UI (utilizing [Dear ImGui](https://github.com/ocornut/imgui))
 - Simple Settings Manager
 
-
-
 ![Spawning a simple bubble while the enemy is going through its AI loop](https://cdn.seppedekeyser.be/img/proj_Minigin/BubbleBobble_bubble.gif)
-
-
 
 ### Engine design
 
@@ -36,6 +30,7 @@ The engine utilizes a GameObject-Component system, with the game developer being
 ### Component order of execution
 
 These are the main functions exposed by BaseComponent. Custom scripts can override these to implement 
+
 ```
 OnPrepare()
 
@@ -50,8 +45,6 @@ OnCleanup()
 OnCollisionBegin(...)
 OnCollisionEnd(...)
 ```
-
-
 
 ### Input system
 
