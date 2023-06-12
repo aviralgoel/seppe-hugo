@@ -1,14 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\archetypes",
     "\\content",
     "\\content\\pictures",
+    "\\content\\projects",
     "\\content\\resumes",
     "\\layouts",
+    "\\layouts\\about-me",
     "\\layouts\\partials",
-    "\\layouts\\shortcodes",
-    "\\resources"
+    "\\layouts\\shortcodes"
   ],
+  "SelectedNode": "\\layouts",
   "PreviewInSolutionExplorer": false
 }
