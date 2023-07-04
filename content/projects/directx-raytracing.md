@@ -32,6 +32,7 @@ This is why we calculate the variance before each time we trace more rays. If th
 The variance is calculated using the formula below:
 
 {{< rawhtml >}}
+
 <div style="text-align: center; width: 100%">
     <a href="https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/adaptive-sampling-variance.png">
         <img src="https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/adaptive-sampling-variance.png" alt="variance formula" width="280px">
@@ -83,6 +84,7 @@ if (g_Dynamic.frameCount != 0 && g_Dynamic.currentPassIdx > g_Dynamic.minimumPas
         return;
 }
 ```
+
 And at last, the final result gets combined with the texture colors from the scene, and we end up with an image that looks something like this:
 
 [![Final combine](https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/final_combine.png)](https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/final_combine.png)
@@ -106,6 +108,7 @@ The right half of the image always results in a much cleaner render with a lot l
 # Performance
 
 {{< rawhtml >}}
+
 <div class="column-layout">
     <a href="https://cdn.seppedekeyser.be/img/internship/bistro-ext-1.png" target="_blank">
         <img src="https://cdn.seppedekeyser.be/img/internship/bistro-ext-1.png" alt="bistro exterior 1"/>
@@ -125,6 +128,7 @@ The right half of the image always results in a much cleaner render with a lot l
 [![Bistro Exterior Performance](https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/bistro-ext-performance.png)](https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/bistro-ext-performance.png)
 
 The configuration used for this benchmark:
+
 - minimum RT passes per pixel: 4
 - maximum RT passes per pixel: 16
 - variance toleration: 0.001
@@ -151,8 +155,6 @@ I had some fun testing out all the different scenes and lighting conditions, her
 [![sponza 2](https://cdn.seppedekeyser.be/img/internship/sponza-2.png)](https://cdn.seppedekeyser.be/img/internship/sponza-2.png)
 
 [![sponza 1](https://cdn.seppedekeyser.be/img/internship/sponza-1.png)](https://cdn.seppedekeyser.be/img/internship/sponza-1.png)
-
-
 
 ---
 
