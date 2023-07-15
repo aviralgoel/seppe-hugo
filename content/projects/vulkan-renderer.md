@@ -4,7 +4,7 @@ date: 2022-04-30T21:42:46+02:00
 draft: false
 description: "A Vulkan renderer I worked on to improve my knowledge of the Vulkan API."
 cover: "https://cdn.seppedekeyser.be/img/proj_VulkanRenderer/Pelican_Banner.png"
-featured: true
+featured: false
 tags: ["C++", "Vulkan"]
 weight: 3
 ---
@@ -60,7 +60,6 @@ void VulkanRenderer::CreateGraphicsPipeline()
     delete pShader;
     pShader = nullptr;
 }
-
 ```
 
 # Shader hot-reloading
@@ -73,13 +72,13 @@ Because of my small abstraction layer, this was fairly easy to implement, and th
 ```cpp
 void VulkanRenderer::ReloadShaders()
 {
-	m_pDevice->WaitIdle();
+    m_pDevice->WaitIdle();
 
-	m_Pipeline.Cleanup(m_pDevice->GetDevice());
-	m_pDevice->GetDevice().destroyRenderPass(m_RenderPass);
+    m_Pipeline.Cleanup(m_pDevice->GetDevice());
+    m_pDevice->GetDevice().destroyRenderPass(m_RenderPass);
 
-	CreateRenderPass();
-	CreateGraphicsPipeline();
+    CreateRenderPass();
+    CreateGraphicsPipeline();
 }
 ```
 
@@ -148,7 +147,6 @@ void Scene::Draw()
 }
 ```
 
-
 # Media
 
 Here you can see the shader hot-reloading system in action:
@@ -174,13 +172,13 @@ And finally, a sneak preview of the PBR renderer (currently, only simple lightin
 
 used libraries:
 
--   [glfw](https://github.com/glfw/glfw) (windowing)
--   [glm](https://github.com/g-truc/glm) (maths library)
--   [Dear ImGui](https://github.com/ocornut/imgui) (debug immediate-mode UI)
--   [logtools](https://github.com/SeppahBaws/logtools) (small logging library)
--   [tinygltf](https://github.com/syoyo/tinygltf) (loading gltf model files)
--   [stb_image](https://github.com/nothings/stb) (reading/writing image files)
--   [json](https://github.com/nlohmann/json) (reading/writing json files)
--   [EnTT](https://github.com/skypjack/entt) (ECS system)
+- [glfw](https://github.com/glfw/glfw) (windowing)
+- [glm](https://github.com/g-truc/glm) (maths library)
+- [Dear ImGui](https://github.com/ocornut/imgui) (debug immediate-mode UI)
+- [logtools](https://github.com/SeppahBaws/logtools) (small logging library)
+- [tinygltf](https://github.com/syoyo/tinygltf) (loading gltf model files)
+- [stb_image](https://github.com/nothings/stb) (reading/writing image files)
+- [json](https://github.com/nlohmann/json) (reading/writing json files)
+- [EnTT](https://github.com/skypjack/entt) (ECS system)
 
 [Project Repository](https://github.com/SeppahBaws/PelicanEngine)

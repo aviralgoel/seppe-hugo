@@ -4,7 +4,7 @@ date: 2022-04-30T21:42:36+02:00
 draft: false
 description: "Adaptive sampling in real-time raytracing with DirectX 12 during my internship at DAE Research."
 cover: "https://cdn.seppedekeyser.be/img/proj_DirectXRaytracing/DXR_Banner.png"
-featured: true
+featured: false
 tags: ["C++", "DirectX 12", "Ray Tracing"]
 weight: 2
 ---

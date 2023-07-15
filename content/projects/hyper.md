@@ -36,6 +36,7 @@ It implements fundamental graphics programming techniques like loading meshes, b
 ## Texture Mapping
 
 {{< rawhtml >}}
+
 <div style="text-align: center; width: 100%">
         <img src="../images/texture_mapping.gif">
 </div>
@@ -46,6 +47,7 @@ Perpective correct texture mapping loaded from png files.
 ## Gouraud Shading
 
 {{< rawhtml >}}
+
 <div style="text-align: center; width: 100%">
         <img src="../images/gouraud_shading.gif">
 </div>
@@ -57,6 +59,7 @@ Gouraud Shading by calculating per vertex normal and interpolating the color for
 ## View Frustum Clipping & Culling
 
 {{< rawhtml >}}
+
 <div style="text-align: center; width: 100%">
         <img src="../images/frustum_clipping.gif">
 </div>
@@ -70,6 +73,7 @@ View Frsuting clipping and culling based on the view frustum planes. Model trian
 Project repository: [GitHub - 3d renderer in C](https://github.com/aviralgoel/AviGL)
 
 {{< rawhtml >}}
+
 <div style="text-align: center; width: 100%">
         <img src="../images/final_demo.gif">
 </div>

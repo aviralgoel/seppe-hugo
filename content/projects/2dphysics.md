@@ -1,10 +1,10 @@
 ---
-title: "Aviral's Graphics Library"
-date: 2022-11-11T18:06:18+01:00
+title: "2D Physics Engine"
+date: 2023-07-11T18:06:18+01:00
 draft: false
-featured: false
-tags: ["C", "SDL 2.0"]
-description: "A simple graphics library capable of performing 3d rasterization and shading.."
+featured: true
+tags: ["C++", "Visual Studio", "Lua"]
+description: "Coding a very simple 2D physics engine from scratch using C++"
 cover: "/pictures/headshot.jpeg"
 weight: 5
 ---
