@@ -23,7 +23,21 @@ I assisted the lead engineer with Camera System and Object Pooling for levels.
 
 When playing through the game majority of the camera movement is done with the help of Unity's Cinemachine. I helped setup the Cinemachine component in the scene making sure the virtual cameras switch smoothly.
 
+{{< rawhtml >}}
+
+<div style="text-align: center; width: 100%">
+        <img src="../images/tryagain1.png">
+</div>
+{{< /rawhtml >}}
+
 At several places in the game the platformer style camera is switched to third person camera. I wrote a script to make this trasition smoother. I also wrote a script that overrides Cinemachine code to allow the player to rotate the virtual camera on key press. 
+
+{{< rawhtml >}}
+
+<div style="text-align: center; width: 100%">
+        <img src="../images/tryagain2.png">
+</div>
+{{< /rawhtml >}}
 
 # 
 
@@ -45,6 +59,13 @@ At several places in the game the platformer style camera is switched to third p
 ### Object Pooling
 
 I set up a standard object pool in the Unity scene using C# to recycle the obstacle game objects in the level. 
+
+{{< rawhtml >}}
+
+<div style="text-align: center; width: 100%">
+        <img src="../images/tryagain3.gif">
+</div>
+{{< /rawhtml >}}
 
 ## Release on Steam
 
