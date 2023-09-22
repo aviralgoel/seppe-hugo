@@ -6,7 +6,7 @@ featured: true
 tags: ["Javascript", "REST", "API"]
 description: "Building a adblock tester to measure effectiveness of adblockers"
 cover: "/pictures/cybi.png"
-weight: 6
+weight: 1
 ---
 
 {{< rawhtml >}}

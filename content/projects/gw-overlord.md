@@ -6,7 +6,7 @@ featured: true
 tags: ["C-Sharp", "Unity", "Game Programming"]
 description: "Working on camera system in Unity with Cinemachine"
 cover: "https://cdn.akamai.steamstatic.com/steam/apps/2448340/header.jpg"
-weight: 4
+weight: 2
 ---
 
 Try Again is a team game project at USC developed by 8 engineers (including me!) and several other art, marketting, legal, desgin students. 
