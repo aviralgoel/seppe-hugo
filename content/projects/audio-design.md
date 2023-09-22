@@ -1,65 +1,42 @@
 ---
-title: "Try Again Game"
-date: 2023-01-11T18:03:40+01:00
+title: "Audio Design Project"
+date: 2022-11-11T18:03:40+01:00
 draft: false
-featured: true
-tags: ["C#", "Unity", "Game Programming"]
-description: "Working on camera system in Unity with Cinemachine"
-cover: "https://cdn.akamai.steamstatic.com/steam/apps/2448340/header.jpg"
+featured: false
+tags: ["Audio", "UE4"]
+description: "Designing and implementing all sounds in a level using Unreal Engine."
+cover: "https://cdn.seppedekeyser.be/img/proj_AudioDesign/AudioDesign_Thumbnail.jpg"
 weight: 6
 ---
 
-Try Again is a team game project at USC developed by 8 engineers (including me!) and several other art, marketting, legal, desgin students. 
+Designing and implementing all sounds in a level in Unreal Engine
 
-It is 2.5D fast paced platformer where you play as Benny, a guy stuck in an unfinished game.
+This was my exam project for the extra Audio Design course that I took. I am quite proud of what I've managed to produce here, as I put quite a few hours into the entire project.
 
-{{< youtube KzFYLFumL9Y>}}
 
-## My Contribution
+{{< youtube 0pPvgizTlEM >}}
 
-I assisted the lead engineer with Camera System and Object Pooling for levels.
 
-### Camera System using Unity Cinemachine
+## Ambient sounds
 
-When playing through the game majority of the camera movement is done with the help of Unity's Cinemachine. I helped setup the Cinemachine component in the scene making sure the virtual cameras switch smoothly.
-
-![](https://cdn.akamai.steamstatic.com/steam/apps/2448340/ss_b607aa2e8161c8dd57bda30a6488907af3e8bcf6.600x338.jpg)
-
-At several places in the game the platformer style camera is switched to third person camera. I wrote a script to make this trasition smoother. I also wrote a script that overrides Cinemachine code to allow the player to rotate the virtual camera on key press. 
+I created two ambient loops, one for each main area of the level
 
 
 
-![](https://cdn.akamai.steamstatic.com/steam/apps/2448340/ss_b6cc256d49eb2b02eb14513a848be2dbfe269ef4.600x338.jpg)
+### Starting area
 
-```C#
- protected override void PostPipelineStageCallback(
-        CinemachineVirtualCameraBase vcam,
-        CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
-    {
-        if (stage == CinemachineCore.Stage.Aim) // runs every frame
-        {   
-            var pos = state.RawOrientation;
-            // you can modify camera rotation by changing pos values
-            pos = Quaternion.Euler(m_XDefaultRotation, m_YDefaultRotation, m_ZDefaultRotation);
-            state.RawOrientation = pos;
-        }
-    }
-```
-
-### Object Pooling
-
-I set up a standard object pool in the Unity scene using C# to recycle the obstacle game objects in the level. 
+When playing through the starting area it felt quite homey and comfortable to me, so I decided to give the ambient a chill vibe, while also adding some alien chants as to not make the player feel too comfortable.
 
 
 
-![](https://cdn.akamai.steamstatic.com/steam/apps/2448340/extras/shipping-containers_gif_.gif)
+### Ending area
 
-## Release on Steam
+Because I thought the end area had a sort of sinister vibe to it, I decided to make the ambient for this area a bit more spooky and creepy. I started off with just a basic underwater room tone, and then added some weird alien sound effects which added to the strangeness of the area. In general this ambient is louder and more in-your-face, which adds to the creepy vibe because it's drowing out your footsteps a bit.
 
-Try Again is now live on Steam with overwheleminly positive reviews.
 
-[TRY AGAIN on Steam](https://store.steampowered.com/app/2448340/TRY_AGAIN/)
 
-Majority of the credit goes to the Try Again team. 
 
-My contribution to try again was miniscule in comparison to the countless hours the other members of the team put in. 
+
+## Unreal Engine implementation
+
+In general the implementation of my sounds into the level was quite painless, however during the setup I did encounter some bugs where sounds in a reverb volume wouldn't get any reverb. This resulted in me having to resort to an earlier version of Unreal.
