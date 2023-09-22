@@ -5,9 +5,10 @@ draft: false
 featured: true
 tags: ["C-Sharp", "Unity", "Game Programming"]
 description: "Working on camera system in Unity with Cinemachine"
-cover: "https://cdn.seppedekeyser.be/img/proj_GW-Overlord/Screenshot_3.png"
+cover: "https://cdn.akamai.steamstatic.com/steam/apps/2448340/header.jpg"
 weight: 4
 ---
+
 Try Again is a team game project at USC developed by 8 engineers (including me!) and several other art, marketting, legal, desgin students. 
 
 It is 2.5D fast paced platformer where you play as Benny, a guy stuck in an unfinished game.
