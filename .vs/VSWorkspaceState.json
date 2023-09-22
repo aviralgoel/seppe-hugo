@@ -2,14 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\content",
-    "\\content\\pictures",
     "\\content\\projects",
+    "\\content\\projects\\images",
     "\\content\\resumes",
     "\\layouts",
     "\\layouts\\about-me",
     "\\layouts\\partials",
     "\\layouts\\shortcodes"
   ],
-  "SelectedNode": "\\content\\projects\\2dphysics.md",
+  "SelectedNode": "\\content\\projects\\audio-design.md",
   "PreviewInSolutionExplorer": false
 }
