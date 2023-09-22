@@ -2,7 +2,7 @@
 title: "Try Again Game"
 date: 2023-01-11T18:03:40+01:00
 draft: false
-featured: true
+featured: false
 tags: ["C#", "Unity", "Game Programming"]
 description: "Working on camera system in Unity with Cinemachine"
 cover: "https://cdn.akamai.steamstatic.com/steam/apps/2448340/header.jpg"
