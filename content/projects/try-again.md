@@ -23,13 +23,9 @@ I assisted the lead engineer with Camera System and Object Pooling for levels.
 
 When playing through the game majority of the camera movement is done with the help of Unity's Cinemachine. I helped setup the Cinemachine component in the scene making sure the virtual cameras switch smoothly.
 
-![](https://cdn.akamai.steamstatic.com/steam/apps/2448340/ss_b607aa2e8161c8dd57bda30a6488907af3e8bcf6.600x338.jpg)
-
 At several places in the game the platformer style camera is switched to third person camera. I wrote a script to make this trasition smoother. I also wrote a script that overrides Cinemachine code to allow the player to rotate the virtual camera on key press. 
 
-
-
-![](https://cdn.akamai.steamstatic.com/steam/apps/2448340/ss_b6cc256d49eb2b02eb14513a848be2dbfe269ef4.600x338.jpg)
+# 
 
 ```C#
  protected override void PostPipelineStageCallback(
@@ -49,10 +45,6 @@ At several places in the game the platformer style camera is switched to third p
 ### Object Pooling
 
 I set up a standard object pool in the Unity scene using C# to recycle the obstacle game objects in the level. 
-
-
-
-![](https://cdn.akamai.steamstatic.com/steam/apps/2448340/extras/shipping-containers_gif_.gif)
 
 ## Release on Steam
 
