@@ -3,8 +3,8 @@ title: "Try Again"
 date: 2023-01-30T21:42:57+02:00
 draft: false
 featured: true
-tags: ["C-Sharp", "Unity", "Game Programming"]
-description: "Working on camera system in Unity with Cinemachine"
+tags: ["C++", "Unreal", "Game Programming"]
+description: "Working on Player movement mechanics and features"
 cover: "https://cdn.akamai.steamstatic.com/steam/apps/2858400/header.jpg?t=1715447791"
 weight: 2
 ---
