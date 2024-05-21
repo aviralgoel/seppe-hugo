@@ -1,5 +1,5 @@
 ---
-title: "Try Again"
+title: "Bugnauts!"
 date: 2023-01-30T21:42:57+02:00
 draft: false
 featured: true
