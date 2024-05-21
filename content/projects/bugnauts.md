@@ -5,28 +5,36 @@ draft: false
 featured: true
 tags: ["C-Sharp", "Unity", "Game Programming"]
 description: "Working on camera system in Unity with Cinemachine"
-cover: "https://cdn.akamai.steamstatic.com/steam/apps/2448340/header.jpg"
+cover: "https://cdn.akamai.steamstatic.com/steam/apps/2858400/header.jpg?t=1715447791"
 weight: 2
 ---
 
-Try Again is a team game project at USC developed by 8 engineers (including me!) and several other art, marketting, legal, desgin students. 
+Bugnauts is a team game project at USC developed by 8 engineers (including me!) and several other art, marketting, legal, desgin students. 
 
-It is 2.5D fast paced platformer where you play as Benny, a guy stuck in an unfinished game.
+Players play as Chloe in an Educational Third-Person Bullet Hell freeing bugs that are trapped in their phantom forms and learning about ecology along the way.
 
-{{< youtube KzFYLFumL9Y>}}
+{{< youtube MmQ7wrHw1K0>}}
 
 ## My Contribution
 
-I assisted the lead engineer with Camera System and Object Pooling for levels.
+I assisted the lead engineer with Player Mechanics and Features
 
-### Camera System using Unity Cinemachine
+### Player Mechanics
 
-When playing through the game majority of the camera movement is done with the help of Unity's Cinemachine. I helped setup the Cinemachine component in the scene making sure the virtual cameras switch smoothly.
+I was resposible to develop Chloe's snappy movements (much like mario) based on game designers' requirments.
+
+- Movement and strafing
+
+- Dodging and Dashing
+
+- Jump and Coyote Time
+
+
 
 {{< rawhtml >}}
 
 <div style="text-align: center; width: 100%">
-        <img src="../images/tryagain1.png">
+        <img src="../images/bugnauts1.gif">
 </div>
 {{< /rawhtml >}}
 
@@ -35,43 +43,21 @@ At several places in the game the platformer style camera is switched to third p
 {{< rawhtml >}}
 
 <div style="text-align: center; width: 100%">
-        <img src="../images/tryagain2.png">
+        <img src="../images/bugnauts2.gif">
 </div>
 {{< /rawhtml >}}
 
-# 
+### Player Inventory System
 
-```C#
- protected override void PostPipelineStageCallback(
-        CinemachineVirtualCameraBase vcam,
-        CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
-    {
-        if (stage == CinemachineCore.Stage.Aim) // runs every frame
-        {   
-            var pos = state.RawOrientation;
-            // you can modify camera rotation by changing pos values
-            pos = Quaternion.Euler(m_XDefaultRotation, m_YDefaultRotation, m_ZDefaultRotation);
-            state.RawOrientation = pos;
-        }
-    }
-```
+I worked on the player's inventory system where the character could collect bullets and store them in her inventory.
 
-### Object Pooling
-
-I set up a standard object pool in the Unity scene using C# to recycle the obstacle game objects in the level. 
-
-{{< rawhtml >}}
-
-<div style="text-align: center; width: 100%">
-        <img src="../images/tryagain3.gif">
-</div>
-{{< /rawhtml >}}
+Players could later use the bullets to attack or heal.
 
 ## Release on Steam
 
 Try Again is now live on Steam with overwheleminly positive reviews.
 
-[TRY AGAIN on Steam](https://store.steampowered.com/app/2448340/TRY_AGAIN/)
+[Bugnauts! on Steam](https://store.steampowered.com/app/2858400/Bugnauts/)
 
 Majority of the credit goes to the Try Again team. 
 
